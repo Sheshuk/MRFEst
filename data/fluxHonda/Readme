@@ -1,0 +1,19 @@
+You will find the files named cz01.mflx cz02.mflx .. cz20.mflx,
+corresponding to cos(zenith)=1.0 -0.95, 0.95-0.90 ... 0.05-0.00 .
+Each files contain 3 colum number data such as;
+
+3.162278E+01 3.926205E-02 2.996873E-02
+3.548134E+01 2.883845E-02 2.203575E-02
+3.981072E+01 2.111998E-02 1.616966E-02
+4.466836E+01 1.538091E-02 1.178503E-02
+.......
+
+The first column is for P_mu in GeV/c, second for mu+ flux,
+and third mu- flux at the P_mu. The unit is (m2 sec sr GeV/c)-1.
+
+In this calculation, I did not take the knee into the flux model yet.
+This is a point Teresa Motaruli of Fluka calculation group complains.
+I think the effect is visible at 10 TeV/c, but still smaller than 10%.
+
+If you find any difficulty or question, please email to:
+mhonda@icrr.u-tokyo.ac.jp.
