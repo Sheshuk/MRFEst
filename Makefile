@@ -10,11 +10,12 @@ OBJECTS=$(addprefix $(BIN),$(OBJ))
 
 all:  $(TARGET)
 
+
 $(TARGET): main.o
 	$(CXX) $(CFLAGS) $(LIBS) -o $@ $(OBJECTS)
 	strip $@
 
-%.o: src/%.cpp
+%.o: src/%.cpp bin
 	$(CXX) $(CFLAGS) -o $@ -c $^
 	mv $@ $(BIN)
 obj: $(OBJECTS)
