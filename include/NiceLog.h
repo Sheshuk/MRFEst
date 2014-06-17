@@ -1,7 +1,7 @@
 
 /// nice macros for Log output
 #define _DumpD(x) printf("%s = %d\n",#x,x)
-#define _DumpX(x) printf("%s = 0x%x\n",#x,x)
+#define _DumpX(x) printf("%s = %p\n",#x,x)
 #define _DumpF(x) printf("%s = %f\n",#x,x)
 #define _DumpS(x) printf("%s = \"%s\"\n",#x,x)
 

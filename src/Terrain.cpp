@@ -134,7 +134,7 @@ void Terrain::MakeHole(double x, double y, double R){
   }
 }
 ///-----------------------------------------------------------------------------
-void Terrain::Write(char* fname){
+void Terrain::Write(const char* fname){
   _Log(1,"Saving terrain to file \"%s\"\n",fname);
   FILE* outf=fopen(fname,"w");
   fprintf(outf,"%%Size= %d %d\n",gNvtX,gNvtY);
@@ -170,7 +170,7 @@ int TerrFmt::Ind_2d1d(int nx,int ny){
 }
 ///-----------------------------------------------------------------------------
 
-bool Terrain::Load(char* fname, TerrFmt fmt){
+bool Terrain::Load(const char* fname, TerrFmt fmt){
  _Log(1,"Loading terrain from file \"%s\"\n",fname);
   FILE* inf=fopen(fname,"r");
   if(inf==NULL){_ErrF(0,"Error opening file \"%s\"\n",fname); return false;}

@@ -27,7 +27,7 @@ using namespace std;
 #define _NiceVlev gVLev
 
 ///global variables
-int gVLev=1;
+int gVLev=0;
 Terrain Land;
 vect3 det_pos;
 vect3 det_ang;
@@ -96,7 +96,14 @@ double FluxMC_int(double tx, double ty, double dtx, double dty, double & thick, 
 
 void helpme(){
   printf("--- Muon radiography simulation --- \n");
-  printf("usage: MuRay [-E=Emin(GeV) -H=holes.root] DEM.xyz\n");
+  printf("\tusage: MuRay [options]\n");
+  printf("\t** options description: ** \n");
+  printf("\t   -h\t display this help \n");
+  printf("\t   -v=Number\t set verbose level\t(def=0) \n");
+  printf("\t   -E=Value \t set minimum energy (GeV)\t(def=1. GeV)\n");
+  printf("\t   -H=filename\t set file with \"holes\" histogram \t(def: none)\n");
+  printf("\t   -cfg=filename\t read config file\n");
+  printf("\t   -dem=filename\t override DEM file\n");
 }
 ///====================================================================================================================
 TH2D* LoadHole(char* fname){
@@ -121,15 +128,16 @@ int main(int argc, char *argv[]){
   if(argc<2){helpme(); return 1;}
   for(int n=1;n<argc;++n){
     _DumpS(argv[n]);
+    if(strcmp(argv[n],"-h")==0){helpme(); return 1;}
     if(strncmp(argv[n],"-v=",3)==0){gVLev=atoi(argv[n]+3); continue;}
     if(strncmp(argv[n],"-E=",3)==0){Emin=atof(argv[n]+3); continue;}
     if(strncmp(argv[n],"-H=",3)==0){h_Hole=LoadHole(argv[n]+3); continue;}
     if(strncmp(argv[n],"-cfg=",5)==0){ gCfg.Read(argv[n]+5); continue; }
-    if(strncmp(argv[n],"-dem=",5)==0){strcpy(gCfg.DEM.File,argv[n]+5); continue;}
+    if(strncmp(argv[n],"-dem=",5)==0){gCfg.DEM.File=argv[n]+5; continue;}
   }
   Terrain_VLev=gVLev;
   
-  Land.Load(gCfg.DEM.File,gCfg.DEM.Format);
+  Land.Load(gCfg.DEM.File.data(),gCfg.DEM.Format);
   det_pos[0]=gCfg.DET.Pos[0];
   det_pos[1]=gCfg.DET.Pos[1];
   det_pos[2]=gCfg.DET.Pos[2];
@@ -153,11 +161,11 @@ int main(int argc, char *argv[]){
   //double TXBinSize = gCfg.HIST.TX_BinSize();
   //double TYBinSize = gCfg.HIST.TY_BinSize();
   double done=0,d0=0;
-  double dist;
+
 //   double x=GetThickness(0,0);
 //   return 0;
   
-  TFile l(Form("%s.root",gCfg.SAVE.FluxFile),"RECREATE");
+  TFile l(Form("%s.root",gCfg.SAVE.FluxFile.data()),"RECREATE");
   float tx,ty;
   float dtx,dty;
   double thick;
@@ -197,9 +205,9 @@ int main(int argc, char *argv[]){
       c.SetGrid();
 
       h_all2->Draw("colz");
-      c.Print(Form("%s.png",gCfg.SAVE.FluxPlot));
+      c.Print(Form("%s.png",gCfg.SAVE.FluxPlot.data()));
       h_all3->Draw("colz");
-      c.Print(Form("%sL.png",gCfg.SAVE.FluxPlot));
+      c.Print(Form("%sL.png",gCfg.SAVE.FluxPlot.data()));
       h_thick->Write();
       
       h_all2->Write();

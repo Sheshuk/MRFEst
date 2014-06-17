@@ -1,5 +1,6 @@
 CXX = g++
-CFLAGS=-O3 -Wall -std=c++0x
+CFLAGS=-O3 -Wall 
+#-std=c++0x
 CFLAGS+=-I `root-config --incdir` -I include/
 LIBS=`root-config --libs`  -lm  -lstdc++
 OBJ = main.o MyConfig.o Terrain.o RayTrace.o Dem.o Attenuation.o Flux.o
@@ -22,3 +23,4 @@ $(TARGET): $(OBJ)
 
 clean:
 	rm $(BIN)*
+	rm *.o

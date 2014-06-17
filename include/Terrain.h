@@ -11,7 +11,7 @@ typedef unsigned int GLuint;
 
 #include <cassert>
 #include <iostream>
-
+#include <cstdio>
 static int Terrain_VLev=6;
 class vect3{
 public:
@@ -71,8 +71,8 @@ public:
   
   Terrain();
   ~Terrain();
-  bool Load(char* fname, TerrFmt fmt);
-  void Write(char* fname);
+  bool Load(const char* fname, TerrFmt fmt);
+  void Write(const char* fname);
   bool Render();
   void CalcIndices(int lod=1);
   void CalcNormals();
